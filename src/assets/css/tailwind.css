@@ -1,0 +1,105 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap');
+
+.lobster{
+    font-family: 'Lobster Two', cursive;
+}
+.border-box{
+    /* position: relative; */
+    /* padding: 5px;
+    min-width: 10rem; */
+    /* box-sizing: border-box; */
+}
+
+
+.w-msg{
+    width: 60vw;
+}
+
+.border{
+    border: 1px;
+}
+html, body{
+    background: rgba(255, 255, 255, 1)
+}
+.shadow{
+   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05)
+}
+.w-half{
+    width: 90vw;
+    
+    /* margin: auto; */
+}
+.center{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.width100{
+    width: 100vw;
+    
+    /* margin: auto; */
+}
+.ng{
+    z-index: 0;
+}
+.image-sign{
+    background-image: url('../../../public/signs1.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.image-sign:hover{
+    filter: grayscale(100%)
+    
+}
+.overlay{
+    background-color: black;
+    filter: opacity(40%);
+}
+.image-plus{
+    background-image: url('../../../public/plus.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.image-minus{
+    background-image: url('../../../public/minus.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.col{
+    background: rgb(10, 120, 247);
+    border: none;
+    color: white;
+}
+.height-90{
+    height: 90vh;
+}
+.send{
+    background-image: url('../../../public/interface.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.send:hover{
+    background-image: url('../../../public/interface1.svg');
+}
+.join{
+    background-image: url('../../../public/comment.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+
+}
+.font-white{
+    color: white;
+}
