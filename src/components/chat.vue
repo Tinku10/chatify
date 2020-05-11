@@ -77,7 +77,7 @@ export default {
       sidemenu: false,
       busy: null,
       showcode: false,
-      socket: io('https://chatify-back.herokuapp.com/', { transports: ['websocket'] })
+      socket: io('https://chatify-back.herokuapp.com', { transports: ['websocket'] })
     }
   },
   methods: {

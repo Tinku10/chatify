@@ -116,7 +116,7 @@ export default {
             createRoom: false,
             counter: 2,
             roomName: null,
-            socket: io('https://chatify-back.herokuapp.com/', { transports: ['websocket'] }),
+            socket: io('https://chatify-back.herokuapp.com', { transports: ['websocket'] }),
             // socket: io('localhost:8000', { transports: ['websocket'] }),
             rooms: [],
             menu: false,
