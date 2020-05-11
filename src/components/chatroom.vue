@@ -116,7 +116,8 @@ export default {
             createRoom: false,
             counter: 2,
             roomName: null,
-            socket: io('localhost:8000', { transports: ['websocket'] }),
+            socket: io('https://chatify-back.herokuapp.com/', { transports: ['websocket'] }),
+            // socket: io('localhost:8000', { transports: ['websocket'] }),
             rooms: [],
             menu: false,
             joinlink: new Array().fill(null),
@@ -127,7 +128,7 @@ export default {
     
     methods: {
         getUser(){
-            axios.get('http://localhost:8000/api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
+            axios.get('https://chatify-back.herokuapp.com/api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
                 // console.log(response)
                 this.user = response.data;
             }).catch((error) => {
@@ -174,13 +175,13 @@ export default {
             }
         },
         getRooms(){
-            axios.get('http://localhost:8000/api/rooms').then((response) => {
+            axios.get('https://chatify-back.herokuapp.com/api/rooms').then((response) => {
                     this.rooms = response;
                 }).catch((error) => {
                     console.log(error);
                 })
             setInterval(() => {
-                axios.get('http://localhost:8000/api/rooms').then((response) => {
+                axios.get('https://chatify-back.herokuapp.com/api/rooms').then((response) => {
                     this.rooms = response;
                 }).catch((error) => {
                     console.log(error);
