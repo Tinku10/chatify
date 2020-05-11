@@ -1,14 +1,13 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <nav class="flex flex-row justify-end items-center mr-4 ml-4 mt-4 mb-4">
+      <router-link :to="{path: '/login'}" class="ml-4 mr-4 text-base font-semibold text-blue-600">Log in</router-link>
+      <router-link :to="{path: '/register'}"  class="ml-4 mr-4 text-base font-semibold text-blue-600">Sign up</router-link>
+    </nav>
+    <div class="center flex flex-col justify-center items-center" >
+      <img src="../../public/chat.svg" class=" h-40 w-40  opacity-75">
+      <h1 class="lobster text-large text-gray-700  z-10">Chatify</h1>
 
-    <!-- Check that the SDK client is not currently loading before accessing is methods -->
-    <div v-if="!$auth.loading">
-      <!-- show login when not authenticated -->
-      <button v-if="!$auth.isAuthenticated" @click="login">Log in</button>
-      <!-- show logout when authenticated -->
-      <button v-if="$auth.isAuthenticated" @click="logout">Log out</button>
     </div>
   </div>
 </template>
@@ -19,17 +18,12 @@
 export default {
   name: "home",
   
-  methods: {
-    // Log the user in
-    login() {
-      this.$auth.loginWithRedirect();
-    },
-    // Log the user out
-    logout() {
-      this.$auth.logout({
-        returnTo: window.location.origin
-      });
-    }
-  }
+  
 };
 </script>
+
+<style scoped>
+  /* html, body{
+    background-image: url('../../public/hannah-wright-GIijSw25I5w-unsplash.jpg')
+  } */
+</style>

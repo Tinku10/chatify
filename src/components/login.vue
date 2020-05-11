@@ -1,11 +1,35 @@
 <template>
-    <div class="relative h-max">
-        <div  class="w-half middle bg-green-100 rounded p-4 flex ">
-            <form class="containers">
-                <input class="input w-64 h-1 bg-white " type="text" name="username" v-model="username">
-                <input class="input w-64 h-1 bg-white " type="password" name="password" v-model="password">
-                <input  class="input w-64 h-1 " id="submit" type="submit" value="Log in" @click.prevent="login">
+    <div class="relative min-h-screen">
+        <div  class=" bg-white-100 border-2 border-gray-100 rounded p-4 pl-8 pr-8 max-w-xs flex flex-col items-center r-center shadow">
+            <h1 class="lobster text-3xl text-gray-700 font-medium mb-2 mt-2">Chatify</h1>
+            <form class="flex flex-col justify-center items-start">
+                <label class="font-bold text-xs mt-2 mb-1 text-gray-500">Username</label>
+                <input class="input w-64 h-8 bg-white border-2 border-gray-200 rounded font-normal text-sm pl-2 pr-2   focus:outline-none  focus:shadow-outline" type="text" name="username" v-model="username" placeholder="Type your username">
+                <label for="" class="font-bold text-gray-500 text-xs mt-2 mb-1">Password</label>
+                <input class="input w-64 h-8 bg-white border-2 border-gray-200 rounded font-normal text-sm pl-2 pr-2  focus:outline-none  focus:shadow-outline" type="password" name="password" v-model="password" placeholder="Type your password">
+                <input  class="input w-64 h-10 bg-blue-600 text-white rounded mt-6 mb-2 cursor-pointer shadow outline-none border-none" id="submit" type="submit" value="Log in" @click.prevent="login">
             </form>
+            <p v-if="error" class="text-xs text-red-400 mt-2 mb-2">Either Username or Password is incorrect</p>
+
+            <div class="flex flex-col mt-4 mb-4 justify-center items-center cursor-pointer">
+                <div class="flex flex-row justify-around items-center">
+                    <p class=" border-t-2 border-gray-300 w-16 h-5 mr-2 ml-2"></p>
+                    <p class="text-center font-bold text-xs mb-4 text-gray-500">OR</p>
+                    <p class=" border-t-2 border-gray-300 w-16 h-5 mr-2 ml-2"></p>
+                </div>
+                <a href="http://localhost:8000/auth/google/">
+                    <div class="flex flex-row shadow rounded h-10 w-64 justify-center items-center" @click="google()">
+                        <p class="google p-3 bg-white rounded-sm ml-1 mr-2 h-10 w-10 mt-1 mb-1"></p>
+                        <p class="font-medium text-sm">Sign in with Google</p>
+                    </div>
+                </a>
+                
+            </div>
+            <div class="flex flex-col justify-center items-center mt-6 mb-2">
+                <p class="text-xm">Don't have an account?</p>
+                <router-link :to="{path: '/register'}" class="text-base font-bold text-blue-600">Sign up</router-link>
+
+            </div>
             <!-- <a href="http://localhost:8000/auth/google"><button>login</button></a> -->
         </div>
 
@@ -18,7 +42,8 @@ export default {
     data(){
         return{
             username: null,
-            password: null
+            password: null,
+            error: false
         }
     },
     methods: {
@@ -29,173 +54,34 @@ export default {
             }
             axios.post('http://localhost:8000/auth/login', data)
             .then((response) => {
-                console.log(response);
-                localStorage.setItem('token', response.data.token)
-                this.$router.push({path: '/chatroom'})
+                if(response){
+                    localStorage.setItem('token', response.data.token)
+                    this.$router.push({path: '/chatroom'})
+
+                }
                 // this.$router.push({path: '/'});
             })
             .catch((errors) => {
-                console.log(errors);
+                // console.log(errors);
+                if(errors){
+                    this.error = true
+
+                }
                 // this.$router.push({path: '/'})
             })
+        },
+       
+    },
+    mounted(){
+        if(this.$route.query.token){
+            localStorage.setItem('token', this.$route.query.token);
+            this.$router.push({path: '/chatroom'})
         }
     }
 }
 </script>
 
 <style scoped>
-.main{
-    color: rgb(141, 223, 228);
-    font-size: 1.5rem;
-    font-family: 'Nanum Gothic', sans-serif;
-    font-weight: lighter;
-    margin: 0px;
-    padding: 2rem;
-    text-align: center;
-    align-content: center;
-    
-    /* border-radius: 0.2rem;
-    border: 1px solid rgb(216, 213, 213); */
-    
-    /* border: 1px rgb(170, 168, 168) solid; 
-    border-radius: 0.2rem; */
-}
 
-#first{
-    /* top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); */
-    position: fixed;
-}
-.containers{
-    /* padding: 20px; */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    align-items: center;
-    
-
-}
-p{
-    font-size: 1rem;
-    font-family: "Source Sans Pro", sans-serif;
-    color: rgb(173, 170, 170);
-    font-weight: lighter;
-    width: 50vw;
-    text-align: center;
-}
-input{
-    /* width: 30rem;
-    height: 1rem; */
-    padding: 1.2rem;
-    /* border: 1px solid rgb(184, 182, 182); */
-    border-radius: 0.2rem;
-    margin-top: 10px;
-    /* box-shadow: 0 20px 30px -16px rgba(66, 66, 66, 0.2); */
-    border: none;
-    outline: none;
-
-}
-
-textarea{
-    /* width: 50vw;
-    height: 4vw; */
-    border: 1px solid rgb(184, 182, 182);
-    font: "Source Sans Pro", sans-serif;
-    padding: 1.5vw;
-    font-size: 1vw;
-    font-weight: lighter;
-    color:rgb(164, 165, 165);
-    border-radius: 0.2rem;
-    margin-top: 5px;
-    box-shadow: 0 20px 30px -16px rgba(9,9,16,.2);
-    border: none;
-    outline: none;
-
-}
-#submit{
-    margin-top: 3rem;
-    /* width: 10rem;
-    height: 3rem;; */
-    font-size: 0.8rem;
-    font-family: 'Josefin Sans', sans-serif;
-    cursor: pointer;
-    outline: none;
-    color: rgb(243, 244, 245);
-    margin-bottom: 4vw;
-    border-radius: 0.2rem;
-    background-color: rgb(141, 223, 228);
-    border: none;
-
-}
-#submit:hover{
-    margin-top: 3rem;
-    /* width: 10rem;
-    height: 3rem;; */
-    font-size: 0.8rem;
-    font-family: 'Josefin Sans', sans-serif;
-    cursor: pointer;
-    outline: none;
-    color: rgb(141, 223, 228);
-    margin-bottom: 4vw;
-    border-radius: 0.2rem;
-    background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(141, 223, 228);
-
-}
-.input{
-    font: "Source Sans Pro", sans-serif;
-    font-size: 0.8rem;
-    /* font-weight: lighter; */
-    color:rgb(164, 165, 165);
-    /* border: solid 1px rgb(221, 218, 218); */
-    outline: none;
-
-}
-input:hover{
-    background-color: rgb(245, 243, 243);
-    outline: none;
-}
-#bottom{
-    font-family: 'Source Code Pro', sans-serif;
-    font-size: 0.8rem;
-    text-align: center;
-    text-decoration: none;
-    margin-right: 6px;
-    margin-left: 6px;
-    color: rgb(80, 78, 78);
-}
-.message{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-nav a{
-    /* font-family: 'Playfair Display', serif; */
-    font-family: 'La Belle Aurore', cursive;
-    color: rgb(113, 212, 212);
-    font-weight: lighter;
-    padding: 1vw;
-    font-size: 1.5vw;
-}
-#image{
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    filter: grayscale(100%)
-
-}
-.error{
-    font-size: 0.8rem;
-    color: rgba(245, 119, 97, 0.815);
-}
-.load{
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    filter: opacity(60%);
-}
 
 </style>

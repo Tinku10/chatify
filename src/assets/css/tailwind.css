@@ -10,6 +10,9 @@
 .lobster{
     font-family: 'Lobster Two', cursive;
 }
+.text-large{
+    font-size: 8rem;
+}
 .border-box{
     /* position: relative; */
     /* padding: 5px;
@@ -41,6 +44,17 @@ html, body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+.r-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.google{
+    background-image: url('../../../public/symbol.svg');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .width100{
     width: 100vw;
@@ -77,12 +91,15 @@ html, body{
     cursor: pointer;
 }
 .col{
-    background: rgb(10, 120, 247);
+    background: rgb(76, 76, 90);
     border: none;
     color: white;
 }
 .height-90{
     height: 90vh;
+}
+.height-10{
+    height:
 }
 .send{
     background-image: url('../../../public/interface.svg');
@@ -90,9 +107,9 @@ html, body{
     background-position: center;
     cursor: pointer;
 }
-.send:hover{
+/* .send:hover{
     background-image: url('../../../public/interface1.svg');
-}
+} */
 .join{
     background-image: url('../../../public/comment.svg');
     background-repeat: no-repeat;
@@ -102,4 +119,22 @@ html, body{
 }
 .font-white{
     color: white;
+}
+.bgblue{
+    background: rgb(153, 203, 243);
+}
+.bggray{
+    background: rgb(248, 248, 248);
+}
+.arrow{
+    background-image: url('../../../public/trajectory.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    filter: opacity(10%);
+    top: 50%;
+    transform: translateY(-50%)
+}
+.arrow:hover{
+    filter: opacity(90%);
 }
