@@ -22,7 +22,7 @@
             </div>
             <div class="flex flex-wrap md:mt-10 p-4 w-half min-h-screen m-auto justify-center flex-shrink-0 " id="workspace" v-if="user">
                 <div class="" v-for="(room, index) in rooms.data" :key="index">
-                    <div v-if="room.mode" class="h-64 w-64  border-gray-400  rounded bg-gray-100 md:mr-10 md:ml-10 lg:mt-4 lg:mb-4 flex flex-col justify-around items-center relative ng hover:shadow-lg">
+                    <div v-if="room.mode" class="h-64 w-64 mt-1 mb-1 border-gray-400  rounded bg-gray-100 md:mr-10 md:ml-10 lg:mt-4 lg:mb-4 flex flex-col justify-around items-center relative ng hover:shadow-lg">
                         <!-- <p class=" h-1 bg-blue-300 w-64 top-0 absolute rounded-t"></p> -->
                         <p class="font-bold text-sm bg-blue-300 absolute top-0 w-64 text-center rounded-t p-2 ">{{room.room}}</p>
                         <div class="h-48 flex flex-col items-center justify-center mt-1 mb-1">
@@ -45,7 +45,7 @@
 
                     </div>
                     
-                    <div v-else class="h-64 w-64  border-gray-400  rounded bg-gray-100 md:mr-10 md:ml-10 lg:mt-4 lg:mb-4 flex flex-col justify-around items-center relative ng hover:shadow-lg">
+                    <div v-else class="h-64 w-64  border-gray-400  rounded bg-gray-100 md:mr-10 md:ml-10 mt-1 mb-1 lg:mt-4 lg:mb-4 flex flex-col justify-around items-center relative ng hover:shadow-lg">
                         <!-- <p class=" h-1 bg-green-400 w-64 top-0 absolute rounded-t"></p> -->
                         <p class="font-bold text-sm bg-green-200 absolute top-0 w-64 text-center rounded-t p-2 ">{{room.room}}</p>
                         <!-- <router-link :to="{path: '/chatroom/chat', query: {room: room.room, mode: room.mode}}" v-if="room.users.length < room.capacity"><p class=" bg-green-400 p-1 rounded w-12 font-white text-center" >Join</p></router-link> -->
