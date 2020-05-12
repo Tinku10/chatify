@@ -4,7 +4,8 @@
             <div class="absolute  h-full w-screen overlay z-10" v-if="createRoom" @click="createRoom=false"></div>
             <nav class=" w-screen shadow p-4 border-none flex flex-row">
             <p class="ml-10 text-3xl m-auto lobster">Chatify</p>
-            <img :src="getImage(user[0].username)" alt="" class="h-10 w-10 rounded-full bg-gray-100 mr-10 cursor-pointer" @click="menu= !menu">
+            <img :src="getImage(user[0].username)" alt="" class="h-10 w-10 rounded-full bg-gray-100 mr-10 cursor-pointer" @click="menu= !menu" v-if="user">
+            <img src="#" alt="" class="h-10 w-10 rounded-full bg-gray-100" v-else>
             <!-- <a href="#" class="mr-10"><div class="h-10 w-10 rounded-full bg-gray-100"></div></a> -->
             </nav>
             <div class="absolute bg-white shadow p-5 right-0 rounded mr-4 ml-4" v-if="menu">
@@ -50,7 +51,7 @@
                         <!-- <router-link :to="{path: '/chatroom/chat', query: {room: room.room, mode: room.mode}}" v-if="room.users.length < room.capacity"><p class=" bg-green-400 p-1 rounded w-12 font-white text-center" >Join</p></router-link> -->
                         <div class="flex flex-col items-center justify-center h-48 mt-1 mb-1">
                             <!-- <label  class="text-xs font-light mb-1">Enter the secret code</label> -->
-                            <input type="text" placeholder="Invitation code" v-model="joinlink[index]" class="pl-2 pr-2 text-xs p-2 w-56 text-center" >
+                            <input type="text" placeholder="Invitation Code" v-model="joinlink[index]" class="pl-2 pr-2 text-xs p-2 w-56 text-center" >
                             <p  class=" bg-green-400 p-1 rounded  font-white text-center cursor-pointer mt-2 mb-2" @click="goto(index)" v-if="room.users.length < room.capacity">Private Join</p>
                             <p v-else class=" bg-gray-400 p-1 rounded  font-white text-center cursor-pointer mt-2 mb-2">Private Join</p>
                         </div>

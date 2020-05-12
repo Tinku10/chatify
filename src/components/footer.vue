@@ -6,7 +6,7 @@
     <!-- <a href="https://github.com/Tinku10/flow-frontend" target=_blank style="text-decoration: none; color: inherit;"><div id="github"></div></a> -->
     <div class="flex flex-row justify-center items-center">
       <p class="mr-2 ml-2 text-sm text-gray-600">Contribute on </p>
-      <a href="https://github.com/Tinku10/chatify-frontend"><img src="../../public/github.svg" alt="Github" class="cursor-pointer"></a>
+      <a href="https://github.com/Tinku10/chatify"><img src="../../public/github.svg" alt="Github" class="cursor-pointer"></a>
     </div>
     
   </div>

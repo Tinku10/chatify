@@ -1,7 +1,7 @@
 <template>
     <div class="relative min-h-screen">
         <div  class=" bg-white-100 border-2 border-gray-100 rounded p-4 pl-8 pr-8 max-w-xs flex flex-col items-center r-center shadow">
-            <h1 class="lobster text-3xl text-gray-700 font-medium mb-2 mt-2">Chatify</h1>
+            <router-link :to="{path: '/'}"><h1 class="lobster text-3xl text-gray-700 font-medium mb-2 mt-2">Chatify</h1></router-link>
             <form class="flex flex-col justify-center items-start">
                 <label class="font-bold text-xs mt-2 mb-1 text-gray-500">Username</label>
                 <input class="input w-64 h-8 bg-white border-2 border-gray-200 rounded font-normal text-sm pl-2 pr-2   focus:outline-none  focus:shadow-outline" type="text" name="username" v-model="username" placeholder="Type your username">
