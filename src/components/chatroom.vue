@@ -75,7 +75,7 @@
         </div>
         <div class="w-screen center lg:w-1/2 shadow lg:rounded  border p-10 bg-white z-50" v-if="createRoom">
             <div class="flex flex-row justify-center">
-                <input type="text"  placeholder="Enter the name of the room" required class="h-10 w-64 pl-4 pr-4 border-gray-600 border-2 rounded focus:shadow-outline" v-model="roomName">
+                <input type="text"  placeholder="Enter the name of the room" required class="h-10 w-64 pl-4 pr-4 border-gray-600 border-2 rounded focus:shadow-outline focus:outline-none" v-model="roomName">
             </div>
             <div class="flex flex-col md:flex-row justify-center items-center mt-4 mb-4">
                 <p class="font-medium text-lg ml-4 mr-4 text-gray-700">Capacity</p>
