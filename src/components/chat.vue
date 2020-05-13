@@ -8,10 +8,11 @@
         <p class="h-8 fixed w-8  lg:hidden block z-20  arrow  "  @click="makeSidemenu()"></p>
         <sidebar  class="w-64 absolute lg:static lg:w-1/3 bg-white min-h-screen z-20 lg:z-0 lg:bg-gray-100 lg:block" v-show="sidemenu"  v-bind:mode="$route.query.mode ">
           <template v-slot:id >
-            <div class="flex flex-col justify-around bg-gray-200 p-1 " >
-              <p class="bg-blue-400 text-sm font-white p-1 pl-1 pr-1 text-center ml-2 mr-2 rounded cursor-pointer" @click="showcode= !showcode">Invitation Code</p>
+            <div class="flex flex-row justify-center bg-gray-200 p-1 " >
+              <p class="bg-blue-400 text-sm font-white p-2 pl-1 pr-1 text-center ml-2  rounded-t-sm cursor-pointer" @click="showcode= !showcode; disp='Copy Code'">Invitation Code</p>
               <!-- <p class="text-xs font-sans mr-1 ml-1 text-center">Invitation Code</p> -->
-              <p class="text-xs text-gray-700 mr-1 ml-1 break-words  ml-2 mr-2" v-show="showcode">{{code()}}</p>
+              <p class="border-2 border-blue-400 text-blue-400  mr-2 text-center p-2  cursor-pointer text-xs font-bold rounded-b-sm" v-show="showcode" @click="copycode;disp='Code Copied'">{{disp}}</p>
+              <input type="text" v-model="secret" value="secret" id="cpy" class=" hidden">
             </div>
           </template>
         </sidebar>
@@ -79,6 +80,8 @@ export default {
       sidemenu: false,
       busy: null,
       showcode: false,
+      secret: this.code(),
+      disp: 'Copy Code', 
       socket: io('http://localhost:8000', { transports: ['websocket'] })
     }
   },
@@ -131,6 +134,13 @@ export default {
         this.socket.emit('leavegr', {room: this.$route.query.room});
         this.$router.push({path: '/chatroom'})
         
+      },
+      copycode(){
+        // let cd = this.code();
+        let txt = document.getElementById('cpy').select()
+        document.execCommand('copy')
+        return txt.value
+
       }
     
     
