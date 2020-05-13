@@ -1,11 +1,11 @@
 <template>
-    <div class="overflow-x-hidden">
-        <div class="relative" v-if="user != null">
+    <div class="overflow-x-hidden" :key="$route.fullPath">
+        <div class="relative min-h-screen" >
             <div class="absolute  h-full w-screen overlay z-10" v-if="createRoom" @click="createRoom=false"></div>
             <nav class=" w-screen shadow p-4 border-none flex flex-row">
             <p class="ml-10 text-3xl m-auto lobster">Chatify</p>
             <img :src="getImage(user[0].username)" alt="" class="h-10 w-10 rounded-full bg-gray-100 mr-10 cursor-pointer" @click="menu= !menu" v-if="user">
-            <img src="#" alt="" class="h-10 w-10 rounded-full bg-gray-100" v-else>
+            <img src="#" alt="" class="h-10 w-10 rounded-full bg-gray-100 mr-10" v-else>
             <!-- <a href="#" class="mr-10"><div class="h-10 w-10 rounded-full bg-gray-100"></div></a> -->
             </nav>
             <div class="absolute bg-white shadow p-5 right-0 rounded mr-4 ml-4" v-if="menu">
@@ -20,13 +20,14 @@
                 <div class="h-10 w-10 rounded-full mr-2 image-sign" @click="createRoom=true"></div>
                 <p class="ml-2 font-light">Create a new Chatroom</p>
             </div>
-            <div class="flex flex-wrap md:mt-10 p-4 w-half min-h-screen m-auto justify-center flex-shrink-0 " id="workspace" v-if="user">
+            <div class="flex flex-wrap md:mt-10 p-4 w-half min-h-screen m-auto justify-center flex-shrink-0 " id="workspace" v-if="user && rooms">
                 <div class="" v-for="(room, index) in rooms.data" :key="index">
                     <div v-if="room.mode" class="h-64 w-64 mt-1 mb-1 border-gray-400  rounded bg-gray-100 md:mr-10 md:ml-10 lg:mt-4 lg:mb-4 flex flex-col justify-around items-center relative ng hover:shadow-lg">
                         <!-- <p class=" h-1 bg-blue-300 w-64 top-0 absolute rounded-t"></p> -->
                         <p class="font-bold text-sm bg-blue-300 absolute top-0 w-64 text-center rounded-t p-2 ">{{room.room}}</p>
                         <div class="h-48 flex flex-col items-center justify-center mt-1 mb-1">
-                            <router-link :to="{path: '/chatroom/chat', query: {room: room.room, mode: room.mode}}" v-if="room.users.length < room.capacity"><p class=" bg-blue-400 p-1 rounded w-12 font-white text-center mt-2 mb-2" >Join</p></router-link>
+                            <router-link :to="{path: '/chatroom/chat', query: {room: room.room, mode: room.mode}}" v-if="room.users.includes(user[0].username)"><p class=" bg-blue-400 p-1 rounded w-12 font-white text-center mt-2 mb-2" >Enter</p></router-link>
+                            <router-link :to="{path: '/chatroom/chat', query: {room: room.room, mode: room.mode}}" v-else-if="room.users.length < room.capacity"><p class=" bg-blue-400 p-1 rounded w-12 font-white text-center mt-2 mb-2" >Join</p></router-link>
                             <p v-else class=" bg-gray-400 p-1 rounded w-12 font-white text-center cursor-pointer">Join</p>
                         <!-- <p class="font-bold text-sm">{{room.room}}</p> -->
 
@@ -95,7 +96,8 @@
                 <li class="text-sm text-gray-700 ml-4 mr-4 mt-1 mb-1">A new group created is visible to every authenticated user.</li>
                 <li class="text-sm text-gray-700 ml-4 mr-4 mt-1 mb-1">A group by default is public.</li>
                 <li class="text-sm text-gray-700 ml-4 mr-4 mt-1 mb-1">Anyone can join a public group until the capacity is exhausted. </li>
-                <li class="text-sm text-gray-700 ml-4 mr-4 mt-1 mb-1">Private groups can be joined only by sharing the url or using the Invitation Code present in the bottom left corner of the group.</li>
+                <li class="text-sm text-gray-700 ml-4 mr-4 mt-1 mb-1">Private groups can be joined only by sharing the url or using the Invitation Code present at the bottom left corner of the group.</li>
+                <li class="text-sm text-gray-700 ml-4 mr-4 mt-1 mb-1">A group is deleted after everyone leaves.</li>
             </ul>
         </div>
     <foot class="overflow-hidden"></foot>
@@ -117,7 +119,7 @@ export default {
             createRoom: false,
             counter: 2,
             roomName: null,
-            socket: io('https://chatify-back.herokuapp.com', { transports: ['websocket'] }),
+            socket: io('http://localhost:8000', { transports: ['websocket'] }),
             // socket: io('localhost:8000', { transports: ['websocket'] }),
             rooms: [],
             menu: false,
@@ -129,7 +131,7 @@ export default {
     
     methods: {
         getUser(){
-            axios.get('https://chatify-back.herokuapp.com/api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
+            axios.get('http://localhost:8000/api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
                 // console.log(response)
                 this.user = response.data;
             }).catch((error) => {
@@ -176,19 +178,19 @@ export default {
             }
         },
         getRooms(){
-            axios.get('https://chatify-back.herokuapp.com/api/rooms').then((response) => {
+            axios.get('http://localhost:8000/api/rooms').then((response) => {
                     this.rooms = response;
                 }).catch((error) => {
                     console.log(error);
                 })
             setInterval(() => {
-                axios.get('https://chatify-back.herokuapp.com/api/rooms').then((response) => {
+                axios.get('http://localhost:8000/api/rooms').then((response) => {
                     this.rooms = response;
                 }).catch((error) => {
                     console.log(error);
                 })
 
-            }, 10000)
+            }, 5000)
         },
         getLink(name){
             return '/chatroom/chat?u=' + btoa(this.user[0].username)+ '&r='+ btoa(name)
@@ -224,6 +226,7 @@ export default {
     mounted(){
         this.getUser();
         this.getRooms();
+        
         // alert(btoa('username=abc&room=xyz'))
     }
 }

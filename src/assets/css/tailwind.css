@@ -45,6 +45,12 @@ html, body{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.center-large{
+    position: fixed;
+    top: 50%;
+    /* left: 65%; */
+    transform: translate(-50%, -50%);
+}
 .r-center{
     position: absolute;
     top: 50%;
@@ -99,10 +105,16 @@ html, body{
     height: 90vh;
 }
 .height-10{
-    height:
+    height: 5vh;
 }
 .send{
-    background-image: url('../../../public/interface.svg');
+    background-image: url('../../../public/direct.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.leave{
+    background-image: url('../../../public/botanical.svg');
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
@@ -138,3 +150,4 @@ html, body{
 .arrow:hover{
     filter: opacity(90%);
 }
+

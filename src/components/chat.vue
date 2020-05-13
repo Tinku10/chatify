@@ -17,6 +17,7 @@
         </sidebar>
         <div class="w-screen lg:w-2/3 bg-white  border-gray-500">
           <div  class="flex flex-col">
+          
           <div class="height-90 overflow-y-scroll relative" id="chats"> 
               
             <div v-for="(message, index) in messages" :key="index" class="mt-4 mb-2 flex flex-col" >
@@ -27,28 +28,29 @@
               </div> -->
               
                 <div class=" max-w-xs bgblue font-white rounded float-right mr-4 ml-4 mt-1 mb-1 self-end" v-if="message.username == user[0].username">
-                  <p class="ml-4 mr-4 font-bold text-xs mt-1 mb-1">@{{message.username}} </p>
+                  <p class="ml-4 mr-4 font-bold text-xs mt-1 mb-1 break-words">@{{message.username}} </p>
                   <p  class="ml-4 mr-4 font-normal text-base mt-1 mb-1 break-words" >{{message.message}}</p>
                 </div>
-                <div v-else-if="message.username == '@chatify'" class="self-center  mt-1 mb-1 bg-gray-100 rounded-full p-1">
+                <div v-else-if="message.username == '@chatify'" class="self-center  mt-1 mb-1 bg-gray-200  rounded-full p-1">
                   <p class="ml-4 mr-4 font-normal text-xs break-words">{{message.message}}</p>
                 </div>
                 <div class="max-w-xs bggray  rounded  mr-4 ml-4 mt-1 mb-1 float-left self-start" v-else>
-                  <p class="ml-4 mr-4 font-bold text-xs mt-1 mb-1">@{{message.username}} </p>
+                  <p class="ml-4 mr-4 font-bold text-xs mt-1 mb-1 break-words">@{{message.username}} </p>
                   <p  class="ml-4 mr-4 font-normal text-base mt-1 mb-1 break-words" >{{message.message}}</p>
 
                 </div>
 
             </div>
 
-            <div v-if="busy" class="mt-1 mb-1 bg-gray-100 rounded-r-full p-1  max-w-xs absolute bottom-0 text-center m-auto">
-                <p class="ml-4 mr-4 font-normal text-xs text-teal-400">{{busy.message}}</p>
+            <div v-if="busy" class="mt-1 mb-1 bg-gray-100 rounded-full p-1  max-w-xs center text-center">
+                <p class="ml-4 mr-4 font-normal text-xs text-teal-400 break-words">{{busy.message}}</p>
             </div>
             </div>
-            <form @submit.prevent="sendmsg">
+            <form @submit.prevent="sendmsg" class="border-t">
               <div  class="flex flex-row  mb-2 justify-center items-center mt-2">
-                <input type="text" name="msg" class="h-10 w-4/5 ml-6 mr-1 bg-gray-200  outline-none pl-4 pr-4 bre" v-model="msg" @keydown="isbusy" placeholder="Enter your message..">
-                <p class="h-10 w-6 mr-6 ml-1 send outline-none" @click.prevent="sendmsg"></p>
+                <p @click="leave()" class=" h-10 w-10 cursor-pointer ml-6 mr-1 leave" title="Leave group"></p>
+                <input type="text" name="msg" class="h-10 w-4/6 ml-6 mr-1 bg-gray-200  rounded-full focus:outline-none pl-4 pr-4 bre text-gray-800" v-model="msg" @keydown="isbusy" placeholder="Enter your message..">
+                <p class="h-10 w-10 mr-6 ml-1 send outline-none" @click.prevent="sendmsg" title="Send"></p>
               </div>
           </form>
 
@@ -77,7 +79,7 @@ export default {
       sidemenu: false,
       busy: null,
       showcode: false,
-      socket: io('https://chatify-back.herokuapp.com', { transports: ['websocket'] })
+      socket: io('http://localhost:8000', { transports: ['websocket'] })
     }
   },
   methods: {
@@ -105,7 +107,7 @@ export default {
       return false
     },
     getUser(){
-          axios.get('https://chatify-back.herokuapp.com/api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
+          axios.get('http://localhost:8000/api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
               this.user = response.data;
               this.socket.emit('joinRoom', {
                 username: this.user[0].username,
@@ -124,6 +126,11 @@ export default {
       makeSidemenu(){
         this.sidemenu = true;
         console.log(this.sidemenu)
+      },
+      leave(){
+        this.socket.emit('leavegr', {room: this.$route.query.room});
+        this.$router.push({path: '/chatroom'})
+        
       }
     
     

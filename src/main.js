@@ -8,6 +8,7 @@ import chat from './components/chat.vue'
 import chatroom from './components/chatroom.vue'
 import login from './components/login.vue'
 import register from './components/register.vue'
+import pnf from './components/pnf.vue'
 
 Vue.use(VueRouter)
 
@@ -42,9 +43,14 @@ const routes = [
       } else {
         next();
       }
-    }},
+    }
+  },
+  { path: '/login/*', component: pnf },
+
   { path: "/auth/google/redirect", component: home },
-  {path: '/chatroom/chat/', component: chat},
+  { path: '/chatroom/chat/', component: chat },
+  { path: '/chatroom/chat/*', component: pnf },
+
   { path: "/chatroom", component: chatroom, beforeEnter(to, from, next){
     if (localStorage.getItem('token')){
       next();
@@ -54,9 +60,13 @@ const routes = [
   }
   
   },
+  { path: '/chatroom/*', component: pnf },
+
   {
     path: '/register', component: register
-  }
+  },
+  { path: '/register/*', component: pnf },
+  {path: '*', component: pnf}
   // {path: "/chatroom/*", component: 404page"}
 ];
 

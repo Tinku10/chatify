@@ -1,8 +1,14 @@
 <template>
   <div class="home">
     <nav class="flex flex-row justify-end items-center mr-4 ml-4 mt-4 mb-4">
-      <router-link :to="{path: '/login'}" class="ml-4 mr-4 text-base font-semibold text-blue-600">Log in</router-link>
-      <router-link :to="{path: '/register'}"  class="ml-4 mr-4 text-base font-semibold text-blue-600">Sign up</router-link>
+      <div v-if="!check()">
+        <router-link :to="{path: '/login'}" class="ml-4 mr-4 text-base font-semibold text-blue-600">Log in</router-link>
+        <router-link :to="{path: '/register'}"  class="ml-4 mr-4 text-base font-semibold text-blue-600">Sign up</router-link>
+
+      </div>
+      <div v-else>
+        <router-link :to="{path: '/chatroom'}"  class="ml-4 mr-4 text-base font-semibold text-blue-600">Home</router-link>
+      </div>
     </nav>
     <div class="center flex flex-col justify-center items-center" >
       <img src="../../public/chat.svg" class=" h-40 w-40  opacity-75">
@@ -17,7 +23,14 @@
 
 export default {
   name: "home",
-  
+  methods: {
+    check(){
+      if(localStorage.getItem('token')){
+        return true
+      }
+      return false
+    }
+  }
   
 };
 </script>
