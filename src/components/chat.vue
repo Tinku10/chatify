@@ -110,7 +110,7 @@ export default {
       return false
     },
     getUser(){
-          axios.get('https://chatify-back.herokuapp.com//api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
+          axios.get('https://chatify-back.herokuapp.com/api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
               this.user = response.data;
               this.socket.emit('joinRoom', {
                 username: this.user[0].username,

@@ -136,7 +136,7 @@ export default {
     
     methods: {
         getUser(){
-            axios.get('https://chatify-back.herokuapp.com//api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
+            axios.get('https://chatify-back.herokuapp.com/api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
                 // console.log(response)
                 this.user = response.data;
             }).catch((error) => {
@@ -183,13 +183,13 @@ export default {
             }
         },
         getRooms(){
-            axios.get('https://chatify-back.herokuapp.com//api/rooms').then((response) => {
+            axios.get('https://chatify-back.herokuapp.com/api/rooms').then((response) => {
                     this.rooms = response;
                 }).catch((error) => {
                     console.log(error);
                 })
             setInterval(() => {
-                axios.get('https://chatify-back.herokuapp.com//api/rooms').then((response) => {
+                axios.get('https://chatify-back.herokuapp.com/api/rooms').then((response) => {
                     this.rooms = response;
                 }).catch((error) => {
                     console.log(error);

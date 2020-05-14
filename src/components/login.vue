@@ -17,7 +17,7 @@
                     <p class="text-center font-bold text-xs mb-4 text-gray-500">OR</p>
                     <p class=" border-t-2 border-gray-300 w-16 h-5 mr-2 ml-2"></p>
                 </div>
-                <a href="https://chatify-back.herokuapp.com//auth/google/">
+                <a href="https://chatify-back.herokuapp.com/auth/google/">
                     <div class="flex flex-row shadow rounded h-10 w-64 justify-center items-center" @click="google()">
                         <p class="google p-3 bg-white rounded-sm ml-1 mr-2 h-10 w-10 mt-1 mb-1"></p>
                         <p class="font-medium text-sm">Sign in with Google</p>
@@ -52,7 +52,7 @@ export default {
                 username: this.username,
                 password: this.password 
             }
-            axios.post('https://chatify-back.herokuapp.com//auth/login', data)
+            axios.post('https://chatify-back.herokuapp.com/auth/login', data)
             .then((response) => {
                 if(response){
                     localStorage.setItem('token', response.data.token)
