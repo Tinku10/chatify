@@ -39,13 +39,13 @@ export default {
     },
     methods: {
         getUsers(){
-      axios.get('http://localhost:8000/api/' + this.$route.query.room, {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((res) => {
+      axios.get('https://chatify-back.herokuapp.com//api/' + this.$route.query.room, {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((res) => {
         this.room = res
       }).catch((err) => {
         console.log(err)
       })
       setInterval(() => {
-        axios.get('http://localhost:8000/api/' + this.$route.query.room, {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((res) => {
+        axios.get('https://chatify-back.herokuapp.com//api/' + this.$route.query.room, {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((res) => {
         this.room = res
         }).catch((err) => {
           console.log(err)

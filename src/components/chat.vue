@@ -82,7 +82,7 @@ export default {
       showcode: false,
       secret: this.code(),
       disp: 'Copy Code', 
-      socket: io('http://localhost:8000', { transports: ['websocket'] })
+      socket: io('https://chatify-back.herokuapp.com/', { transports: ['websocket'] })
     }
   },
   methods: {
@@ -110,7 +110,7 @@ export default {
       return false
     },
     getUser(){
-          axios.get('http://localhost:8000/api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
+          axios.get('https://chatify-back.herokuapp.com//api/user', {headers: { "content-type": "application/json",Authorization: "Bearer " + localStorage.getItem('token')}}).then((response) => {
               this.user = response.data;
               this.socket.emit('joinRoom', {
                 username: this.user[0].username,

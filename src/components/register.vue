@@ -30,7 +30,7 @@
                 <router-link :to="{path: '/login'}" class="text-base font-bold text-blue-600">Log in</router-link>
 
             </div>
-            <!-- <a href="http://localhost:8000/auth/google"><button>login</button></a> -->
+            <!-- <a href="https://chatify-back.herokuapp.com//auth/google"><button>login</button></a> -->
         </div>
 
     </div>
