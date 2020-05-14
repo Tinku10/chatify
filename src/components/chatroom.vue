@@ -75,8 +75,11 @@
 
         </div>
         <div class="w-screen center lg:w-1/2 shadow lg:rounded  border p-10 bg-white z-50" v-if="createRoom">
-            <div class="flex flex-row justify-center">
-                <input type="text"  placeholder="Enter the name of the room" required class="h-10 w-64 pl-4 pr-4 border-gray-600 border-2 rounded focus:shadow-outline focus:outline-none" v-model="roomName">
+            <div class="flex flex-col justify-center items-center">
+                <input type="text"  placeholder="Enter the name of the room" required class="h-10 w-64 pl-4 pr-4 border-gray-600 border-2 rounded focus:shadow-outline focus:outline-none" v-model="roomName" @keyup="roomExists()">
+                <p v-if="this.err=='Name already taken'" class="text-xs text-red-400 mt-1">{{this.err}}</p>
+                <p v-if="this.err=='Valid name'&& this.roomName" class="text-xs text-green-400 mt-1">{{this.err}}</p>
+
             </div>
             <div class="flex flex-col md:flex-row justify-center items-center mt-4 mb-4">
                 <p class="font-medium text-lg ml-4 mr-4 text-gray-700">Capacity</p>
@@ -89,7 +92,8 @@
             <div class="flex flex-row justify-center items-center mt-4 mb-4">
                 <p class="font-medium text-lg ml-4 mr-4 border-gray-700 border-2 p-2 rounded cursor-pointer" id="nocpub" @click="show('public')">Public</p>
                 <p class="font-medium text-lg ml-4 mr-4 border-gray-700 border-2 p-2 cursor-pointer rounded" id="nocpri" @click="show('private')">Private</p>
-                <p class="font-medium text-lg ml-4 mr-4 border-gray-700  p-4 bg-green-200 cursor-pointer rounded" @click='goToChat()'>Create</p>
+                <p class="font-medium text-lg ml-4 mr-4 border-gray-700  p-4 bg-green-200 cursor-pointer rounded" @click='goToChat()' v-if="this.err=='Valid name'">Create</p>
+                <p class="font-medium text-lg ml-4 mr-4 border-gray-700  p-4 bg-gray-200 cursor-pointer rounded"  v-else>Create</p>
             </div>
             <p @click="showinfo = !showinfo" class="text-center text-sm text-blue-600 cursor-pointer mb-2 ">Additional Information</p>
             <ul v-if="showinfo" class="flex flex-col justify-center items-start list-disc">
@@ -125,7 +129,8 @@ export default {
             menu: false,
             joinlink: new Array().fill(null),
             showinfo: false,
-            publicgr: 'true'
+            publicgr: 'true',
+            err: null
         }
     },
     
@@ -221,11 +226,18 @@ export default {
         logout(){
             localStorage.removeItem('token');
             this.$router.push({path: '/'})
+        },
+        roomExists(){
+            // alert(this.roomName)
+            this.socket.emit('checkRoomExist', {room: this.roomName})
         }
     },
     mounted(){
         this.getUser();
         this.getRooms();
+        this.socket.on('roomEmpty', (data) => {
+            this.err = data.msg
+        })
         
         // alert(btoa('username=abc&room=xyz'))
     }

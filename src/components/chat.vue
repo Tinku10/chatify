@@ -9,10 +9,10 @@
         <sidebar  class="w-64 absolute lg:static lg:w-1/3 bg-white min-h-screen z-20 lg:z-0 lg:bg-gray-100 lg:block" v-show="sidemenu"  v-bind:mode="$route.query.mode ">
           <template v-slot:id >
             <div class="flex flex-row justify-center bg-gray-200 p-1 " >
-              <p class="bg-blue-400 text-sm font-white p-2 pl-1 pr-1 text-center ml-2  rounded-t-sm cursor-pointer" @click="showcode= !showcode; disp='Copy Code'">Invitation Code</p>
+              <p class="bg-blue-400 w-1/2 text-sm font-white p-2 pl-1 pr-1 text-center   rounded-l cursor-pointer" @click="disp='Copy Code'">Invitation Code</p>
               <!-- <p class="text-xs font-sans mr-1 ml-1 text-center">Invitation Code</p> -->
-              <p class="border-2 border-blue-400 text-blue-400  mr-2 text-center p-2  cursor-pointer text-xs font-bold rounded-b-sm" v-show="showcode" @click="copycode;disp='Code Copied'">{{disp}}</p>
-              <input type="text" v-model="secret" value="secret" id="cpy" class=" hidden">
+              <p class="border-2 w-1/2 hover:shadow-inner border-blue-400 text-blue-400   text-center p-2  cursor-pointer text-xs font-bold rounded-r"  @click="copycode();disp='Code Copied'">{{disp}}</p>
+              <input type="text" v-model="secret" value="secret" id="cpy" class="hidden">
             </div>
           </template>
         </sidebar>
@@ -139,7 +139,8 @@ export default {
         // let cd = this.code();
         let txt = document.getElementById('cpy').select()
         document.execCommand('copy')
-        return txt.value
+        
+        return txt
 
       }
     
