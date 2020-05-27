@@ -52,9 +52,13 @@
                         <!-- <router-link :to="{path: '/chatroom/chat', query: {room: room.room, mode: room.mode}}" v-if="room.users.length < room.capacity"><p class=" bg-green-400 p-1 rounded w-12 font-white text-center" >Join</p></router-link> -->
                         <div class="flex flex-col items-center justify-center h-48 mt-1 mb-1">
                             <!-- <label  class="text-xs font-light mb-1">Enter the secret code</label> -->
-                            <input type="text" placeholder="Invitation Code" v-model="joinlink[index]" class="pl-2 pr-2 text-xs p-2 w-56 text-center" >
-                            <p  class=" bg-green-400 p-1 rounded  font-white text-center cursor-pointer mt-2 mb-2" @click="goto(index)" v-if="room.users.length < room.capacity">Private Join</p>
-                            <p v-else class=" bg-gray-400 p-1 rounded  font-white text-center cursor-pointer mt-2 mb-2">Private Join</p>
+                            <span v-if="room.users.includes(user[0].username)" @click="enter(room.room, room.key)" class=" bg-green-400 p-1 rounded w-12 font-white text-center mt-2 mb-2 cursor-pointer">Enter</span>
+                            <span v-else class="flex flex-col items-center justify-center">
+                                <input type="text" placeholder="Invitation Code" v-model="joinlink[index]" class="pl-2 pr-2 text-xs p-2 w-56 text-center" >
+                                <p  class=" bg-green-400 p-1 rounded w-24 self-center font-white text-center cursor-pointer mt-2 mb-2" @click="goto(index)" v-if="room.users.length < room.capacity">Private Join</p>
+                                <p v-else class=" bg-gray-400 p-1 rounded w-12 font-white text-center cursor-pointer mt-2 mb-2">Private Join</p>
+
+                            </span>
                         </div>
                         <div class="bg-white rounded p-4 bottom-0 absolute mb-2 flex flex-col justify-evenly items-center">
 
@@ -92,7 +96,7 @@
             <div class="flex flex-row justify-center items-center mt-4 mb-4">
                 <p class="font-medium text-lg ml-4 mr-4 border-gray-700 border-2 p-2 rounded cursor-pointer" id="nocpub" @click="show('public')">Public</p>
                 <p class="font-medium text-lg ml-4 mr-4 border-gray-700 border-2 p-2 cursor-pointer rounded" id="nocpri" @click="show('private')">Private</p>
-                <p class="font-medium text-lg ml-4 mr-4 border-gray-700  p-4 bg-green-200 cursor-pointer rounded" @click='goToChat()' v-if="this.err=='Valid name'">Create</p>
+                <p class="font-medium text-lg ml-4 mr-4 border-gray-700  p-4 bg-green-200 cursor-pointer rounded" @click='goToChat()' v-if="this.err=='Valid name' && roomName != ''">Create</p>
                 <p class="font-medium text-lg ml-4 mr-4 border-gray-700  p-4 bg-gray-200 cursor-pointer rounded"  v-else>Create</p>
             </div>
             <p @click="showinfo = !showinfo" class="text-center text-sm text-blue-600 cursor-pointer mb-2 ">Additional Information</p>
@@ -211,6 +215,10 @@ export default {
             // alert(p);
             let p = atob(this.joinlink[index])
             this.$router.push({path: p})
+        },
+        enter(room, key){
+            
+            this.$router.push({path: '/chatroom/chat?room='+ room + '&mode=false&k=' + key})
         },
         randomStr(len, arr) { 
             var ans = ''; 

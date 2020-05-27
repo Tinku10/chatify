@@ -8,11 +8,18 @@
         <p class="h-8 fixed w-8  lg:hidden block z-20  arrow  "  @click="makeSidemenu()"></p>
         <sidebar  class="w-64 absolute lg:static lg:w-1/3 bg-white min-h-screen z-20 lg:z-0 lg:bg-gray-100 lg:block" v-show="sidemenu"  v-bind:mode="$route.query.mode ">
           <template v-slot:id >
-            <div class="flex flex-row justify-center bg-gray-200 p-1 " >
-              <p class="bg-blue-400 w-1/2 text-sm font-white p-2 pl-1 pr-1 text-center   rounded-l cursor-pointer" @click="disp='Copy Code'">Invitation Code</p>
-              <!-- <p class="text-xs font-sans mr-1 ml-1 text-center">Invitation Code</p> -->
-              <p class="border-2 w-1/2 hover:shadow-inner border-blue-400 text-blue-400   text-center p-2  cursor-pointer text-xs font-bold rounded-r"  @click="copycode();disp='Code Copied'">{{disp}}</p>
-              <input type="text" v-model="secret" value="secret" id="cpy" class="hidden">
+            <div class="flex flex-col justify-center bg-gray-200 p-1 " >
+              <div class="flex flex-row justify-center bg-gray-200 p-1">
+                <!-- <p class="bg-blue-400  text-sm font-white p-2 pl-1 pr-1 text-center   rounded-l cursor-pointer" @click="disp='Copy Code'">Invitation Code</p> -->
+                <!-- <p class="text-xs font-sans mr-1 ml-1 text-center">Invitation Code</p> -->
+                <div class="pl-1 pr-1 border-gray-400 border-2 shadow text-blue-400 flex flex-row justify-center rounded items-center cursor-pointer bg-white" title="Click to copy" @click="copycode()">
+                  <p class="copy w-10 h-10 p-2 "></p>
+                  <p class="  text-center p-2 text-gray-600  text-xs font-bold rounded-r">{{disp}}</p>
+
+                </div>
+
+              </div>
+              <input type="text" v-model="secret" value="secret" id="cpy" class="ml-1 mr-1 rounded text-xs text-gray-500 pl-2 pr-2 focus:outline-none">
             </div>
           </template>
         </sidebar>
@@ -47,8 +54,8 @@
                 <p class="ml-4 mr-4 font-normal text-xs text-teal-400 break-words">{{busy.message}}</p>
             </div>
             </div>
-            <form @submit.prevent="sendmsg" class="border-t">
-              <div  class="flex flex-row  mb-2 justify-center items-center mt-2">
+            <form @submit.prevent="sendmsg" class="border-t border-b bottom-0 fixed w-screen lg:w-2/3 ">
+              <div  class="flex flex-row  mt-2 mb-2 justify-center items-center ">
                 <p @click="leave()" class=" h-10 w-10 cursor-pointer ml-6 mr-1 leave" title="Leave group"></p>
                 <input type="text" name="msg" class="h-10 w-4/6 ml-6 mr-1 bg-gray-200  rounded-full focus:outline-none pl-4 pr-4 bre text-gray-800" v-model="msg" @keydown="isbusy" placeholder="Enter your message..">
                 <p class="h-10 w-10 mr-6 ml-1 send outline-none" @click.prevent="sendmsg" title="Send"></p>
@@ -81,7 +88,7 @@ export default {
       busy: null,
       showcode: false,
       secret: this.code(),
-      disp: 'Copy Code', 
+      disp: 'Copy Invitation Code', 
       socket: io('https://chatify-back.herokuapp.com/', { transports: ['websocket'] })
     }
   },
@@ -137,6 +144,7 @@ export default {
       },
       copycode(){
         // let cd = this.code();
+        this.disp = 'Code Copied'
         let txt = document.getElementById('cpy').select()
         document.execCommand('copy')
         

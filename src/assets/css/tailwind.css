@@ -105,7 +105,12 @@ html, body{
     height: 90vh;
 }
 .height-10{
-    height: 5vh;
+    min-height: 2.5rem;
+}
+.copy{
+    background-image: url('../../../public/copy.svg');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .send{
     background-image: url('../../../public/direct.svg');
